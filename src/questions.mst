@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+{{#categories}}
+<question type="category">
+    <category>
+        <text>$course$/{{name}}</text>
+    </category>
+</question>
+{{#questions}}
+    <question type="{{qtype}}">
+        <name><text>{{name}}</text></name>
+        <questiontext><text>{{text}}</text></questiontext>
+        {{#answers}}
+            <answer fraction="{{fraction}}{{^fraction}}100{{/fraction}}">
+                <text>{{text}}</text>
+                <feedback><text>{{feedback}}{{^feedback}}Korrekt{{/feedback}}</text></feedback>
+            </answer>
+        {{/answers}}
+        <shuffleanswers>true</shuffleanswers>
+    </question>
+{{/questions}}
+{{/categories}}
+</quiz>

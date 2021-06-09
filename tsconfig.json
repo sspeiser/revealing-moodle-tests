@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "declaration": true,
+        "strict": true,
+        "outDir": "./dist",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src/**/*", "scripts/**/*.ts"
+    ]
+}
