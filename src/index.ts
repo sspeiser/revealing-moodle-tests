@@ -12,11 +12,11 @@ export class RevealingMoodleTests {
         this.categories.push(createQuestions(name, n, qtype, genQuestion));
     }
 
-    public addYesNoQuestions(name: string, text: string, statements: Record<string, boolean>) {
-        this.categories.push(createYesNoQuestions(name, text, statements));
-    }
+    // public addYesNoQuestions(name: string, text: string, statements: Record<string, boolean>) {
+    //     this.categories.push(createYesNoQuestions(name, text, statements));
+    // }
 
-    public addMultiChoice(name: string, text: string, statements: Record<string, boolean | string[]>) {
+    public addMultiChoice(name: string, text: string, statements: Record<string, boolean | string[]>): void {
         this.categories.push(createMultiChoice(name, text, statements));
     }
 
