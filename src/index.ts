@@ -2,24 +2,55 @@ import mustache = require('mustache');
 import fs = require('fs');
 import path = require('path');
 
+export class RevealingMoodleTests {
+    private categories: QuestionCategory[] = [];
 
-function randomInt(a: number, b: number) {
-    const min = Math.min(a, b);
-    const max = Math.max(a, b);
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    /**
+     * addQuestions
+     */
+    public addQuestions(name: string, n: number, qtype: "cloze" | "shortanswer", genQuestion: () => { name?: string, text: string, answers?: string[] }): void {
+        this.categories.push(createQuestions(name, n, qtype, genQuestion));
+    }
+
+    public addYesNoQuestions(name: string, text: string, statements: Record<string, boolean>) {
+        this.categories.push(createYesNoQuestions(name, text, statements));
+    }
+
+    public addMultiChoice(name: string, text: string, statements: Record<string, boolean | string[]>) {
+        this.categories.push(createMultiChoice(name, text, statements));
+    }
+
+    public createXML(): string {
+        let id = 100000;
+        return mustache.render(template, {
+            categories: this.categories,
+            nextid: () => id++
+        });
+    }
+    
+    public saveTo(filename: string): void {
+        fs.writeFileSync(filename, this.createXML());
+    }
+
+    public static randomInt(a: number, b: number): number {
+        const min = Math.min(a, b);
+        const max = Math.max(a, b);
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    public static randomChar(): string {
+        return RevealingMoodleTests.randomInt(10, 10 + 25).toString(36);
+    }
+
+    public static randomizeArray<T>(arr: T[]): T[] {
+        return arr.sort(() => 0.5 - Math.random());
+    }
+    
+    public static randomElement<T>(arr: T[]): T {
+        return arr[RevealingMoodleTests.randomInt(0, arr.length - 1)];
+    }
 }
 
-function randomChar() {
-    return randomInt(10, 10 + 25).toString(36);
-}
-
-function randomizeArray<T>(arr: T[]): T[] {
-    return arr.sort(() => 0.5 - Math.random());
-}
-
-function randomElement<T>(arr: T[]): T {
-    return arr[randomInt(0, arr.length - 1)];
-}
 
 const template: string = fs.readFileSync(path.resolve(__dirname, "questions.mst"), 'utf8');
 
@@ -97,8 +128,3 @@ function createMultiChoice(name: string, text: string, statements: Record<string
     return { name: name, questions: questions } as QuestionCategory;
 }
 
-// let id = 100000;
-// console.log(mustache.render(template, {
-//     categories: categories,
-//     nextid: () => id++
-// }));
