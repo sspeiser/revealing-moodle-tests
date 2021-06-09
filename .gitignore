@@ -105,3 +105,8 @@ dist
 
 .vscode
 .DS_Store
+
+
+# testing
+/coverage
+test-report.xml
