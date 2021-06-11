@@ -1,11 +1,11 @@
 {
   "name": "revealing-moodle-tests",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Create Moodle test questions programmatically",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/*.mst dist/",
     "test": "jest -i",
     "lint": "eslint -c .eslintrc.js --ext .ts src"
   },
